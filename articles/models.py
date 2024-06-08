@@ -13,7 +13,7 @@ class ArticleQuerySet(models.QuerySet):
             return self.none()
         lookups = Q(title__icontains=query) | Q(content__icontains=query)
 
-        return self.get_queryset().filter(lookups)
+        return self.filter(lookups)
     
 class ArticleManager(models.Manager):
     def get_queryset(self) -> models.QuerySet:
@@ -38,7 +38,7 @@ class Article(models.Model):
         return super().save(*args, **kwargs)
     
     def get_absolute_url(self):
-        return reverse("article-detail", kwargs={"slug": self.slug})
+        return reverse("articles:detail", kwargs={"slug": self.slug})
 
     
 def article_pre_save(sender, instance, *args, **kwargs):

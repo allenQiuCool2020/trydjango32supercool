@@ -51,7 +51,7 @@ def article_detail_view(request, slug=None):
 def article_search_view(request):
     # print(request.GET)
     # below is a dictionary
-    query = request.GET['q'] 
+    query = request.GET.get('q') 
     qs = Article.objects.search(query)
     context = {
         "object_list":qs

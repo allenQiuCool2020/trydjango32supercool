@@ -13,60 +13,16 @@
     <p>{{ message }}</p>
 {% endif %}
 <div style='margin-top:30px;'>
-    <form action="" method="POST">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="{% if field.field.required %}required-class{% endif %}">
-            {{ field.errors }}
-            {{ field.label_tag }} {{field }}
-            {% if field.help_text %}
-                <p class="help">{{ feild.help_text|safe}}</p>
-            {% endif %}
-        </div>
-        {% endfor %}
-
-        {% if formset %}
-        <h3>Ingredients</h3>
-        {{ formset.management_form}}
-        <div id='ingredient-form-list'>
-            {% for form in formset %}
-                <div class="ingredient-form">
-                    {{ form.as_p }}
-                </div>
-            {% endfor %}
-        </div>
-        <div id='empty-form' class="hidden">{{ formset.empty_form.as_p}}</div>
-        <button id='add-more' type='button'>Add More</button>
-        {% endif %}
-        <div style='margin-top:10px;'>
-            <button type="submit">Save</button>
-        </div>
-    </form>
+    {% include 'recipes/partials/forms.html' %}
+    <h3>Ingredients</h3>
+    {% for ingredient in object.get_ingredients_children %}
+        {% include 'recipes/partials/ingredient-inline.html' with object=ingredient %}
+    {% endfor %}
 </div>
-
-<script>
-    
-    const addMoreBtn = document.getElementById('add-more')
-    const totalNewForms = document.getElementById('id_form-TOTAL_FORMS')
-    //const currentIngredientForms = document.getElementsByClassName('ingredient-form')
-    addMoreBtn.addEventListener('click', add_new_form)
-    function add_new_form(event){
-        if (event){
-            event.preventDefault()
-        }
-        const currentIngredientForms = document.getElementsByClassName('ingredient-form')
-        const currentFormCount = currentIngredientForms.length // + 1
-        const formCopyTarget = document.getElementById('ingredient-form-list')
-        const copyEmptyFormEl = document.getElementById('empty-form').cloneNode(true)
-        copyEmptyFormEl.setAttribute('class', 'ingredient-form')
-        copyEmptyFormEl.setAttribute('id', `form-${currentFormCount}`)
-        const regex = new RegExp('__prefix__', 'g')
-        copyEmptyFormEl.innerHTML = copyEmptyFormEl.innerHTML.replace(regex, currentFormCount)
-        totalNewForms.setAttribute('value', currentFormCount + 1)
-        // now add new empty form element to our html form
-        formCopyTarget.append(copyEmptyFormEl)
-
-    }
-</script>
+{% if new_ingredient_url %}
+<div id='ingredient-create'>
+    <button hx-get="{{ new_ingredient_url }}" hx-trigger='click' hx-target="#ingredient-create" hx-swap="beforeend">Add Ingredient</button>
+</div>
+{% endif %}
 
 {% endblock content %}

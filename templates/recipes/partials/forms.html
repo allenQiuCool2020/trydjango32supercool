@@ -1,4 +1,4 @@
-<form class='htmx-request' action="" method="POST" hx-post='.' hx-swap='outerHTML'>
+<form class='htmx-request' hx-post='.' hx-swap='outerHTML' hx-trigger='{% if form.instance.id %}change delay:500ms, {% endif %}submit'>
     {% if message %}
     <p>{{ message }}</p>
     {% endif %}

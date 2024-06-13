@@ -31,6 +31,10 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
     publish = models.DateField(auto_now_add=False, auto_now=False, default=timezone.now)
     objects = ArticleManager()
+
+    @property
+    def name(self):
+        return self.title
     
     def save(self, *args, **kwargs):
         # if self.slug is None:

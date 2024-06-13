@@ -1,4 +1,4 @@
-<form class='htmx-request' action="" method="POST" hx-post='{% if url %}{{ url }}{% else %}.{% endif %}' hx-swap='outerHTML'>
+<form class='htmx-request'  hx-post='{% if url %}{{ url }}{% else %}.{% endif %}' hx-swap='outerHTML'>
 
     {% if message %}
     <p>{{ message }}</p>

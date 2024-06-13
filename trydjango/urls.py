@@ -19,7 +19,6 @@ from django.urls import path, include
 from articles.views import (
     home_view,
     article_create_view,
-    article_search_view,
     article_detail_view,
 )
 from accounts.views import (
@@ -27,12 +26,16 @@ from accounts.views import (
     logout_view, 
     register_view,
 )
+from search.views import (
+    search_view
+)
 
 
 urlpatterns = [
     path('', home_view),
     path('pantry/recipes/', include('recipes.urls')),
     path('articles/', include('articles.urls')),
+    path('search/', search_view, name='search'),
     path('admin/', admin.site.urls),
     path('login/', login_view),
     path('logout/', logout_view),

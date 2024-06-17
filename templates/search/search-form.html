@@ -13,7 +13,7 @@
                 <option value="recipe">Recipes</option>
             {% endif %}      
         </select>
-        <input type='text' name='q' value='{{ request.GET.q }}' hx-get='/search/' hx-trigger='keyup changed delay:200ms' hx-include='#search-type' hx-target="#typehead-results">
+        <input type='text' name='q' value='{{ request.GET.q }}' hx-get='/search/' hx-trigger='keyup changed delay:200ms' hx-include='#search-type' hx-target="#typehead-results" placeholder="search...">
         
         <input type="submit"> 
     </form>
